@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <meta charset="UTF-8">
+    <title>Вход</title>
+</head>
+<body>
+<div class="act_form">
+    <form method="post">
+        {% csrf_token %}
+        <h1>Вход</h1>
+        <label>
+            <input type="text" placeholder="Логин" name="username" class="login_input">
+        </label>
+        <label class="password_input">
+            <input type="password" placeholder="Пароль" name="password">
+        </label>
+        <a href="{% url 'registration' %}">Регистрация</a>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <input type="submit">
+    </form>
+</div>
+</body>
+</html>

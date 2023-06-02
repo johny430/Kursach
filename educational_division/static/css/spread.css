@@ -1,0 +1,25 @@
+table {
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+table td {
+    padding: 0;
+    margin: 0;
+}
+
+table tr {
+    padding: 0;
+    margin: 0;
+}
+
+.courses_list {
+    font-size: 30px;
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+h2 {
+    text-align: center;
+}

@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+    <link href="{% static 'css/specialities.css' %}" rel="stylesheet">
+    <link href="{% static 'css/plan.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Главная</title>
+</head>
+<body>
+<header>
+    <div>
+        <a href="{% url 'courses' %}">Предметы</a>
+        <a href="{% url 'specialities' %}">Специальности</a>
+        <a href="{% url 'professors' %}">Преподаватели</a>
+        <a href="{% url 'groups' %}">Группы</a>
+        <a href="{% url 'acts' %}">Акты</a>
+        <a href="{% url 'plans' %}">Учебные планы специальностей</a>
+        <a href="{% url 'spread' %}">Распределение нагрузки</a>
+    </div>
+    <div>
+        <a href="{% url 'me' %}">{{ user.professor_data.last_name }} {{ user.professor_data.first_name }} {{ user.professor_data.surname }}</a>
+        <a href="{% url 'logout' %}">Выход</a>
+    </div>
+</header>
+<div class="content">
+    <h1>Учебрные планы специальностей</h1>
+    {% for speciality in plan %}
+        <div>
+            <p class="speciality_name">{{ speciality.name }}</p>
+        </div>
+        <table class="speciality_course">
+            <tr>
+                <td class="top"><p>Название дисциплины</p></td>
+                <td class="top"><p>описание дисциплины</p></td>
+                <td class="top"><p>Количество проводимых часов</p></td>
+            </tr>
+            {% for plan in speciality.speciality_courses.all %}
+                <tr>
+
+                    <td><p>{{ plan.name }}</p></td>
+                    <td><p>{{ plan.description }}</p></td>
+                    <td><p>{{ plan.hours }}</p></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+</div>
+<footer>
+    <p>© 2001-2023</p>
+</footer>
+</body>
+</html>

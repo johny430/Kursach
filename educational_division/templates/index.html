@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+    <link href="{% static 'css/me.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Главная</title>
+</head>
+<body>
+<header>
+    <div>
+        <a href="{% url 'courses' %}">Предметы</a>
+        <a href="{% url 'specialities' %}">Специальности</a>
+        <a href="{% url 'professors' %}">Преподаватели</a>
+        <a href="{% url 'groups' %}">Группы</a>
+        <a href="{% url 'acts' %}">Акты</a>
+        <a href="{% url 'plans' %}">Учебные планы специальностей</a>
+        <a href="{% url 'spread' %}">Распределение нагрузки</a>
+    </div>
+    <div>
+        <a href="{% url 'me' %}">{{ user.professor_data.last_name }} {{ user.professor_data.first_name }} {{ user.professor_data.surname }}</a>
+        <a href="{% url 'logout' %}">Выход</a>
+    </div>
+</header>
+<div class="content">
+    <div class="info">
+        <h1>Информация о вас</h1>
+        <p>
+            ФИО: {{ user.professor_data.last_name }} {{ user.professor_data.first_name }} {{ user.professor_data.surname }}</p>
+        {% if request.user.role == 0 %}
+            <p style="font-size: 25px;display: block;margin: 0">Преподаватель</p>
+        {% endif %}
+        {% if request.user.role == 1 %}
+            <p style="font-size: 25px;display: block;margin: 0">Работник учебного отдела</p>
+        {% endif %}
+        {% if request.user.role == 3 %}
+               <p style="font-size: 25px;display: block;margin: 0">Администратор</p>
+        {%  endif %}
+        <div class="professor_info_contact">
+            <p>Email: {{ user.professor_data.email }}</p>
+            <p>Номер телефона: {{ user.professor_data.phone_number }}</p>
+        </div>
+    </div>
+    <div class="buttons">
+        <div class="button_block">
+            <a href="{% url 'generate_act' %}">Сформировать акты выполнения нагрузки за период</a>
+            <a href="{% url 'create_agreement' %}">Сформировать договор</a>
+        </div>
+        <div class="button_block">
+            <a href="{% url 'completed_work' %}"> Сформировать отчет о выполненной нагрузке</a>
+            <a href="{% url 'remain_work' %}"> Сформировать отчет о остатках нагрузки</a>
+        </div>
+    </div>
+    {% if request.user.role == 1 %}
+        <div class="buttons">
+            <div class="button_block">
+                <a href="{% url 'create_speciality_course' %}">Редактировать учебный план</a>
+                <a href="{% url 'create_contact' %}">Распределить нагрузку</a>
+            </div>
+        </div>
+    {% endif %}
+    {% if request.user.role == 0 %}
+        <h2>Проводимые вами занятия</h2>
+        <table class="speciality_course">
+            <tr>
+                <td class="top"><p>Название дисциплины</p></td>
+                <td class="top"><p>Тип проводимых занятий</p></td>
+                <td class="top"><p>Количество проводимых часов</p></td>
+                <td class="top"><p>Номер группы</p></td>
+                <td class="top"><p>Специальность</p></td>
+            </tr>
+            {% for contract in  user.professor_data.contracts_set.all %}
+                <tr>
+                    <td><p>{{ contract.course.name }}</p></td>
+                    <td><p>{{ contract.type }}</p></td>
+                    <td><p>{{ contract.hours }}</p></td>
+                    <td><p>{{ contract.group.number }}</p></td>
+                    <td><p>{{ contract.group.specialty.name }}</p></td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h2>Перечень ваших актов выполненных работ</h2>
+        <table>
+            <tr>
+                <td class="top"><p>Номер группы</p></td>
+                <td class="top"><p>Название дисциплины</p></td>
+                <td class="top"><p>Тип проводимых занятий</p></td>
+                <td class="top"><p>Количество отработанных часов</p></td>
+                <td class="top"><p>Период</p></td>
+                <td class="top"><p>Дата создания</p></td>
+            </tr>
+            {% for act in acts %}
+                <tr>
+                    <td>
+                        <p>{{ act.contract.group.number }}</p>
+                    </td>
+                    <td>
+                        <p>{{ act.contract.course.name }}</p>
+                    </td>
+                    <td>
+                        <p>{{ act.contract.type }}</p>
+                    </td>
+                    <td>
+                        <p>{{ act.worked_hours }}</p>
+                    </td>
+                    <td>
+                        <p style="display: flex; flex-direction: column">
+                        <p>{{ act.beginning_date }} -</p>
+                        <p>{{ act.end_date }}</p></p>
+                    </td>
+                    <td>
+                        <p>{{ act.creation_date }}</p>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% if request.user.is_superuser %}
+        <div class="buttons button_block">
+            <a href="{% url 'admin:index' %}" style="width: 50%; margin: 0 auto">Админ панель</a>
+        </div>
+    {% endif %}
+</div>
+<footer>
+    <p>© 2001-2023</p>
+</footer>
+</body>
+</html>

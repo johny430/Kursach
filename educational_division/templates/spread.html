@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block urls %}
+    <link href="{% static 'css/spread.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/specialities.css' %}">
+{% endblock %}
+{% block title %}Распределение нагрузки{% endblock %}
+{% block content %}
+    <h1>Распределение нагруки преподвателей</h1>
+    {% for professor in professors %}
+        <h2>{{ professor.last_name }} {{ professor.first_name }} {{ professor.surname }}</h2>
+        <table class="speciality_course">
+            <tr>
+                <td class="top"><p>Название дисциплины</p></td>
+                <td class="top"><p>Тип проводимых занятий</p></td>
+                <td class="top"><p>Количество проводимых часов</p></td>
+                <td class="top"><p>Номер группы</p></td>
+                <td class="top"><p>Специальность</p></td>
+            </tr>
+            {% for contract in professor.contracts_set.all %}
+                <tr>
+                    <td><p>{{ contract.course.name }}</p></td>
+                    <td><p>{{ contract.type }}</p></td>
+                    <td><p>{{ contract.hours }}</p></td>
+                    <td><p>{{ contract.group.number }}</p></td>
+                    <td><p>{{ contract.group.specialty.name }}</p></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+{% endblock %}

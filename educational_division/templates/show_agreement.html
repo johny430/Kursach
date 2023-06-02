@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+    <link href="{% static 'css/create_act.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <style>
+        .content {
+            border: 1px solid black;
+            height: 600px;
+            margin: 100px auto;
+            padding: 5%;
+            font-size: 30px;
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        h1 {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <title>Отчет о выполненной работе</title>
+</head>
+<body>
+<header>
+    <div>
+        <a href="{% url 'courses' %}">Предметы</a>
+        <a href="{% url 'specialities' %}">Специальности</a>
+        <a href="{% url 'professors' %}">Профессоры</a>
+        <a href="{% url 'groups' %}">Группы</a>
+        <a href="{% url 'acts' %}">Акты</a>
+        <a href="{% url 'plans' %}">Учебные планы специальностей</a>
+        <a href="{% url 'spread' %}">Распределение нагрузки</a>
+    </div>
+    <div>
+        <a href="{% url 'me' %}">{{ user.professor_data.last_name }} {{ user.professor_data.first_name }} {{ user.professor_data.surname }}</a>
+        <a href="{% url 'logout' %}">Выход</a>
+    </div>
+</header>
+<div class="content">
+    <h1>Договор оказания услуг</h1>
+    <p>Количество часов: {{ contract.hours }}</p>
+    <p>Название дисциплины: {{ contract.course.name }}</p>
+    <p>Группа проведения занятий: {{ contract.group.number }}</p>
+    <p>Специальность: {{ contract.group.specialty.name }}</p>
+    <p>ФИО
+        преподавателя: {{ user.professor_data.last_name }} {{ user.professor_data.first_name }} {{ user.professor_data.surname }}</p>
+</div>
+<footer>
+    <p>© 2001-2023</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,42 @@
+body {
+    background-color: #e9edf3;
+}
+
+.act_form {
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 30%;
+    text-align: center;
+    padding: 10px 0 10px 0;
+    height: 300px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.act_form input {
+    display: block;
+    width: 80%;
+    height: 32px;
+    margin: 10px auto 0;
+}
+
+.act_form {
+    font-size: 20px;
+}
+
+.act_form a {
+    text-decoration: none;
+    color: blue;
+    margin-top: 20px;
+    display: block;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 30px;
+}

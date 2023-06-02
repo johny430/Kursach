@@ -1,0 +1,43 @@
+body {
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #6786b8;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 3% 0 3%;
+    height: 80px;
+}
+
+header a {
+    color: black;
+    text-decoration: none;
+    font-size: 25px;
+    line-height: 80px;
+    margin-left: 15px;
+}
+
+footer {
+    background-color: #6786b8;
+    padding: 10px 3% 10px 3%;
+    margin-top: auto;
+    font-size: 25px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 50%;
+    vertical-align: center;
+}
+
+h1 {
+    text-align: center;
+}
